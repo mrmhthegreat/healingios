@@ -1,0 +1,30 @@
+{
+    "project_info": {
+      "project_number": "311294023209",
+      "firebase_url": "https://trinil-sync-default-rtdb.asia-southeast1.firebasedatabase.app",
+      "project_id": "trinil-sync",
+      "storage_bucket": "trinil-sync.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:311294023209:android:d59c15672bff5382f5ae38",
+          "android_client_info": {
+            "package_name": "com.spiritualhealing.healing.app"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyAAZxHpOIUFWGti_4ePYqMl9VSNUg2BMUs"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }
