@@ -40,11 +40,7 @@ class AudiosView extends GetView<AudiosController> {
             systemOverlayStyle: SystemUiOverlayStyle(
                 statusBarColor: HexColor("#597D85"),
                 statusBarBrightness: Brightness.light,
-                statusBarIconBrightness: Brightness.light,
-                systemNavigationBarColor: HexColor('#102e47'),
-                systemNavigationBarDividerColor: HexColor('#102e47'),
-                systemNavigationBarIconBrightness: Brightness.dark,
-                systemNavigationBarContrastEnforced: false),
+                statusBarIconBrightness: Brightness.light),
           ),
           backgroundColor: HexColor('#102e37'),
           bottomNavigationBar: Obx(() => BottomBarInspiredInside(

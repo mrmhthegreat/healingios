@@ -58,11 +58,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     double height = SizeConfig.screenH!;
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarColor: colors[_currentPage],
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: colors[_currentPage],
-      systemNavigationBarDividerColor: colors[_currentPage],
-      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
     ));
     return Scaffold(
       backgroundColor: colors[_currentPage],

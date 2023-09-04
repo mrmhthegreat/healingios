@@ -91,10 +91,33 @@ class _WebViewMiniState extends State<WebViewMini> {
   late PullToRefreshController pullToRefreshController;
   var loading = false.obs;
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-
+  final adUrlFilters = [
+    ".*.doubleclick.net/.*",
+    ".*.ads.pubmatic.com/.*",
+    ".*.googlesyndication.com/.*",
+  ];
+  final List<ContentBlocker> contentBlockers = [];
   @override
   void initState() {
     super.initState();
+    for (final adUrlFilter in adUrlFilters) {
+      contentBlockers.add(ContentBlocker(
+          trigger: ContentBlockerTrigger(
+            urlFilter: adUrlFilter,
+          ),
+          action: ContentBlockerAction(
+            type: ContentBlockerActionType.BLOCK,
+          )));
+    }
+    // apply the "display: none" style to some HTML elements
+    contentBlockers.add(ContentBlocker(
+        trigger: ContentBlockerTrigger(
+          urlFilter: ".*",
+        ),
+        action: ContentBlockerAction(
+            type: ContentBlockerActionType.CSS_DISPLAY_NONE,
+            selector:
+                ".elementor-widget-woocommerce-menu-cart, .elementor-widget-wc-add-to-cart, .add_to_cart_button, #menu-item-2672, #PopupSignupForm_0, .mc-banner")));
     _connectivitySubscription =
         Connectivity().onConnectivityChanged.listen((e) async {
       if (e == ConnectivityResult.none) {
@@ -110,6 +133,9 @@ class _WebViewMiniState extends State<WebViewMini> {
       onRefresh: () async {
         if (Platform.isAndroid) {
           ctrl?.reload();
+        }
+        if (Platform.isIOS) {
+          ctrl?.loadUrl(urlRequest: URLRequest(url: Uri.parse(widget.url)));
         }
       },
     );
@@ -127,13 +153,10 @@ class _WebViewMiniState extends State<WebViewMini> {
     // double width = MediaQuery.of(context).size.width;
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: HexColor("#597D85"),
-        statusBarBrightness: Brightness.light,
-        statusBarIconBrightness: Brightness.light,
-        systemNavigationBarColor: HexColor("#102e47"),
-        systemNavigationBarDividerColor: HexColor("#102e47"),
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarContrastEnforced: false));
+      statusBarColor: HexColor("#597D85"),
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+    ));
     return WillPopScope(
         onWillPop: () => backbuton(context),
         child: SafeArea(
@@ -301,11 +324,12 @@ class _WebViewMiniState extends State<WebViewMini> {
                                     URLRequest(url: Uri.parse(widget.url)),
                                 initialOptions: InAppWebViewGroupOptions(
                                     crossPlatform: InAppWebViewOptions(
-                                      disableHorizontalScroll: false,
+                                      disableHorizontalScroll: true,
                                       useOnDownloadStart: true,
                                       cacheEnabled: true,
                                       horizontalScrollBarEnabled: false,
                                       transparentBackground: true,
+                                      contentBlockers: contentBlockers,
                                       verticalScrollBarEnabled: false,
                                       supportZoom: false,
                                       preferredContentMode:
@@ -380,12 +404,23 @@ class _WebViewMiniState extends State<WebViewMini> {
                                       url.contains("truecaller://") ||
                                       url.contains("facebook.com") ||
                                       url.contains("twitter.com") ||
+                                      url.contains(
+                                          "https://spiritualhealing.co.uk/checkout/") ||
+                                      url.contains(
+                                          "https://spiritualhealing.co.uk/cart/") ||
+                                      url.contains(
+                                          "https://spiritualhealing.co.uk/shop-all/") ||
+                                      url.contains(
+                                          "https://spiritualhealing.co.uk/courses/") ||
+                                      url.contains(
+                                          "https://spiritualhealing.co.uk/product/") ||
                                       url.contains("www.google.com/maps") ||
                                       url.contains("pinterest.com") ||
                                       url.contains("youtube.com") ||
                                       url.contains("snapchat.com") ||
-                                      url.contains("tiktokW.com") ||
+                                      url.contains("tiktok.com") ||
                                       url.contains("instagram.com") ||
+                                      url.contains("linkedin.com") ||
                                       url.contains("play.google.com") ||
                                       url.contains("mailto:") ||
                                       url.contains("tel:") ||
